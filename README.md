@@ -5,6 +5,7 @@ This repository owns the public profile for
 [`profile/README.md`](profile/README.md) on the organization page.
 
 The [website](https://tetrodotoxin.dev) introduces the project and its ongoing
-research. The [Godot example](https://tetrodotoxin.dev/lab/) can be tried in a
-browser. The organization profile links to the implementation repositories and
-explains how their responsibilities fit together.
+research. Check out the [live Godot lab running in WebAssembly](https://tetrodotoxin.dev/lab/)
+or [build it locally](https://github.com/tetrodotoxin-dev/Godot#run-locally).
+The organization profile links to the implementation repositories and explains
+how their responsibilities fit together.

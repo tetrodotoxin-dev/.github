@@ -9,16 +9,18 @@ components useful to each other. A renderer, compiler service or language runtim
 should be able to offer its capabilities without requiring every consumer to
 adopt its storage, implementation language or private object model.
 
-TTX provides the foundation for that exchange. The participants agree on what a
-contract means and check the concrete data and callable representations they
-will use. Each provider keeps control of how it does the work. This lets a
-consumer use an implementation it was not built alongside, while checking the
-interface before calling through it.
+With TTX, a tool exposes its capabilities through driver-style interfaces that
+other languages and runtimes can use without adopting its implementation.
+Binding checks both the contract being requested and the layouts of its data
+and callable interface, so separately built components can establish how to
+work together before making a call.
 
 ## See it in Godot
 
-The [Godot example](https://tetrodotoxin.dev/lab/) brings GDScript, native C++
-and CUDA image providers into the same scene. They offer the same operations
+Check out the [live Godot lab running in WebAssembly](https://tetrodotoxin.dev/lab/)
+or [build it locally](https://github.com/tetrodotoxin-dev/Godot#run-locally).
+The lab brings GDScript, native C++ and CUDA image providers into the same scene.
+They offer the same operations
 through TTX contracts while keeping their algorithms and storage separate.
 Changing an overlay updates the composition without recomputing an unrelated
 filter. Independent C and C++ modules also expose classes through a reusable
