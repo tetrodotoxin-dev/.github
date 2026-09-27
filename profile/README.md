@@ -1,82 +1,88 @@
 <p align="center">
-  <a href="https://github.com/Tetrodotoxin-Dev/Tetrodotoxin">
-    <img src="https://raw.githubusercontent.com/Tetrodotoxin-Dev/Tetrodotoxin/main/extension/media/logo.png" alt="Tetrodotoxin Toolchain" width="100%">
+  <a href="https://tetrodotoxin.dev">
+    <img src="https://raw.githubusercontent.com/tetrodotoxin-dev/Tetrodotoxin/main/extension/media/logo.png" alt="Tetrodotoxin Toolchain" width="100%">
   </a>
 </p>
 
-> **The common layer is meaning, not representation.**
+Tetrodotoxin is a systems and tooling project about making independently built
+components useful to each other. A renderer, compiler service or language runtime
+should be able to offer its capabilities without requiring every consumer to
+adopt its storage, implementation language or private object model.
 
-Tetrodotoxin is an extensible language and toolchain platform for projects that
-speak more than one language. It lets purpose-built languages keep the meaning
-that makes them useful while sharing one Package graph, one editor experience,
-one linked understanding of the program, and one path to finished products.
+TTX provides the foundation for that exchange. The participants agree on what a
+contract means and check the concrete data and callable representations they
+will use. Each provider keeps control of how it does the work. This lets a
+consumer use an implementation it was not built alongside, while checking the
+interface before calling through it.
 
-Software already contains languages for composition, behavior, scenes, shaders,
-assets, and deployment. Those languages often remain data files whose rules are
-reimplemented by every tool, or they grow into isolated compilers with their own
-private model of the project. Tetrodotoxin gives them a place to meet without
-flattening them into one universal language first.
+## See it in Godot
 
-## One project, several languages
+The [Godot example](https://tetrodotoxin.dev/lab/) brings GDScript, native C++
+and CUDA image providers into the same scene. They offer the same operations
+through TTX contracts while keeping their algorithms and storage separate.
+Changing an overlay updates the composition without recomputing an unrelated
+filter. Independent C and C++ modules also expose classes through a reusable
+Godot extension.
 
-Imagine adding a scene language without also inventing another type system,
-package manager, editor protocol, build driver, and shader bridge. The scene can
-own lifecycle and signals, reuse ordinary Library code for behavior, and meet
-Render and Shader around graphics. The editor follows those relationships
-through the same identities used by the build.
+You can try the CPU and GDScript providers directly in the browser. CUDA requires
+the native setup with a compatible GPU and toolkit; the browser reports that
+capability as unavailable. The [Godot repository](https://github.com/tetrodotoxin-dev/Godot)
+contains the scene, providers and instructions for running or extending it.
 
-Tetrodotoxin calls each focused language a **Dialect**. A Dialect owns the
-grammar and complete meaning of its domain. TTX provides a compact shared
-vocabulary for the semantic questions that genuinely cross domains, including
-identity, resolution, Types, Packs, Layouts, Addressables, Callables,
-documentation, and Interfaces.
+## How the pieces fit together
 
-This is **raising by participation**. The original objects created by each
-language take part in a linked semantic Workspace instead of being copied into a
-universal declaration tree or compiler IR.
+TTX separates the agreements needed to connect those systems into three layers:
 
-> **Pull upward every fact that is target neutral and genuinely shared, while
-> leaving richer meaning with its concrete owner.**
+* **Data** describes concrete data and callable forms, compiles their canonical
+  representations, and provides protocols for accessing values.
+* **Semantic** identifies contracts by UUID and negotiates their interfaces and
+  data access. Recognizing a contract and agreeing on a usable interface are
+  separate questions.
+* **Concept** exposes Abstracts that consumers can navigate and query for
+  policies. An implementation can answer the questions a consumer understands
+  without exposing its private classes.
 
-## One understanding, many products
+The [TTX overview](https://tetrodotoxin.dev/ttx/) explains those layers in more
+detail. The implementation is being separated into repositories around these
+responsibilities:
 
-The same semantic graph supports navigation, completion, Packages, compilation,
-and durable reconstruction. Each tool asks the real semantic owners for the
-context it needs rather than maintaining another account of the program.
+| Project | Responsibility |
+| --- | --- |
+| [Perimortem](https://github.com/tetrodotoxin-dev/Perimortem) | Memory, containers, serialization, image storage and system services. |
+| [Toolchain](https://github.com/tetrodotoxin-dev/Toolchain) | Shared Bazel rules, compiler and SDK acquisition, validation and release packaging. |
+| TTX | The Data, Semantic and Concept foundation, independent of the source toolchain. |
+| [Tetrodotoxin](https://github.com/tetrodotoxin-dev/Tetrodotoxin) | Source dialects, semantic models and the compiler and toolchain work built on TTX. |
+| Photophore | Vulkan rendering, windowing and platform input. |
+| [CUDA](https://github.com/tetrodotoxin-dev/CUDA) | CUDA compilation and execution services exposed through TTX contracts. |
+| [Godot](https://github.com/tetrodotoxin-dev/Godot) | The reusable Godot bridge and the demonstration that exercises these interfaces. |
 
-Once that meaning is complete, independent **Terminals** carry it into products
-for other consumers. LLVM IR, SPIR-V, Package Archives, formatted source, native
-programs, and application bundles can all begin from the same Workspace.
-Lowering remains in the representation domains built for it, while the authored
-languages keep their original meaning.
+TTX and Photophore repository publication is still in progress.
 
-Dialects compose what a Tetrodotoxin toolchain understands. Terminals compose
-what it can produce. Together they make a specialized language part of a
-complete SDK rather than another parser attached to the edge of a project.
+## Where the work is going
 
-## Explore Tetrodotoxin
+The source toolchain applies the same approach to language and compiler services.
+The goal is for each language to contribute its own semantics while editor tools,
+build systems and execution backends follow the relationships between them.
+Cross-language navigation, reusable build tools and reconstructable Packages are
+part of that work. The source and Package systems are still being reworked;
+there is no published Puffer SDK to install yet. The [Puffer page](https://tetrodotoxin.dev/puffer/)
+describes that direction.
 
-* [Tetrodotoxin](https://github.com/Tetrodotoxin-Dev/Tetrodotoxin) is the main
-  language and toolchain repository.
-* [Project philosophy](https://github.com/Tetrodotoxin-Dev/Tetrodotoxin/blob/main/PHILOSOPHY.md)
-  explains why the architecture takes this unusual shape.
-* [Contributing](https://github.com/Tetrodotoxin-Dev/Tetrodotoxin/blob/main/CONTRIBUTING.md)
-  offers practical guidance for extending and reviewing the project.
-* [TTX](https://github.com/Tetrodotoxin-Dev/Tetrodotoxin/tree/main/ttx) defines
-  the semantic graph vocabulary shared across languages.
-* [Visual Studio Code extension](https://github.com/Tetrodotoxin-Dev/Tetrodotoxin/tree/main/extension)
-  provides the editor and native debugging experience.
+The [research](https://tetrodotoxin.dev/research/) follows the practical question
+behind these examples: how much integration knowledge can a good interface carry
+for the next person or tool using it? Performance measurements, provider
+substitution and work by independent coding agents help expose where the design
+still relies on context that its interfaces do not express. The
+[background](https://tetrodotoxin.dev/docs/design/) explains how the project grew
+out of runtime and tooling work.
 
-## Join the project
+## Join the work
 
-Tetrodotoxin is developed in public, and concrete use cases are especially
-valuable. Each new domain helps reveal which meaning belongs in a Dialect and
-which ideas have become genuinely common.
-
-Share an idea, report a problem, or follow the work through
-[GitHub Issues](https://github.com/Tetrodotoxin-Dev/Tetrodotoxin/issues).
-Project correspondence can be sent to
+Concrete integration problems are especially useful because they reveal where
+an interface makes reuse easier and where it still leaves too much work to the
+consumer. Share an idea or report a problem through
+[GitHub Issues](https://github.com/tetrodotoxin-dev/Tetrodotoxin/issues), or contact
 [github@tetrodotoxin.dev](mailto:github@tetrodotoxin.dev).
 
 Tetrodotoxin is available under the
-[MIT License](https://github.com/Tetrodotoxin-Dev/Tetrodotoxin/blob/main/LICENSE).
+[MIT License](https://github.com/tetrodotoxin-dev/Tetrodotoxin/blob/main/LICENSE).
