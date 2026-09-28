@@ -27,13 +27,11 @@ filter. Independent C and C++ modules also expose classes through a reusable
 Godot extension.
 
 You can try the CPU and GDScript providers directly in the browser. CUDA requires
-the native setup with a compatible GPU and toolkit; the browser reports that
-capability as unavailable. The [Godot repository](https://github.com/tetrodotoxin-dev/Godot)
-contains the scene, providers and instructions for running or extending it.
+the [native setup](https://github.com/tetrodotoxin-dev/Godot) with a compatible GPU and toolkit.
 
-## How the pieces fit together
+## Build and wrap toolchains with TTX
 
-TTX separates the agreements needed to connect those systems into three layers:
+TTX separates APIs needed to connect systems into three layers:
 
 * **Data** describes concrete data and callable forms, compiles their canonical
   representations, and provides protocols for accessing values.
@@ -44,9 +42,7 @@ TTX separates the agreements needed to connect those systems into three layers:
   policies. An implementation can answer the questions a consumer understands
   without exposing its private classes.
 
-The [TTX overview](https://tetrodotoxin.dev/ttx/) explains those layers in more
-detail. The implementation is being separated into repositories around these
-responsibilities:
+## Project Split
 
 | Project | Responsibility |
 | --- | --- |
@@ -58,33 +54,11 @@ responsibilities:
 | [CUDA](https://github.com/tetrodotoxin-dev/CUDA) | CUDA compilation and execution services exposed through TTX contracts. |
 | [Godot](https://github.com/tetrodotoxin-dev/Godot) | The reusable Godot bridge and the demonstration that exercises these interfaces. |
 
-TTX and Photophore repository publication is still in progress.
-
-## Where the work is going
-
-The source toolchain applies the same approach to language and compiler services.
-The goal is for each language to contribute its own semantics while editor tools,
-build systems and execution backends follow the relationships between them.
-Cross-language navigation, reusable build tools and reconstructable Packages are
-part of that work. The source and Package systems are still being reworked;
-there is no published Puffer SDK to install yet. The [Puffer page](https://tetrodotoxin.dev/puffer/)
-describes that direction.
-
-The [research](https://tetrodotoxin.dev/research/) follows the practical question
-behind these examples: how much integration knowledge can a good interface carry
-for the next person or tool using it? Performance measurements, provider
-substitution and work by independent coding agents help expose where the design
-still relies on context that its interfaces do not express. The
-[background](https://tetrodotoxin.dev/docs/design/) explains how the project grew
-out of runtime and tooling work.
-
 ## Join the work
 
-Concrete integration problems are especially useful because they reveal where
-an interface makes reuse easier and where it still leaves too much work to the
-consumer. Share an idea or report a problem through
+Concrete integration problems are welcome along with any contributions. Share an idea or report a problem through
 [GitHub Issues](https://github.com/tetrodotoxin-dev/Tetrodotoxin/issues), or contact
 [github@tetrodotoxin.dev](mailto:github@tetrodotoxin.dev).
 
-Tetrodotoxin is available under the
+Tetrodotoxin Projects are available under the
 [MIT License](https://github.com/tetrodotoxin-dev/Tetrodotoxin/blob/main/LICENSE).
