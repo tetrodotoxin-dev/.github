@@ -41,8 +41,10 @@ Dialects to share one implementation model.
 
 Source is the foundation supplied with Tetrodotoxin. It turns authored bytes
 into a retained lexical stream with stable token identities, source locations,
-diagnostics and canonical formatting. Other Dialects interpret that stream into
-their own models instead of rebuilding the source layer.
+diagnostics and canonical formatting. Use it beneath a generated parser such as
+[ANTLR](https://www.antlr.org/), or consume its cursor directly. Either path can
+publish a graph-hosted AST that other Dialects and tools navigate without
+learning the parser's private object model.
 
 Puffer is the command-line and language-server host Tetrodotoxin uses for its
 own packages. The VS Code extension runs the same workspace through Puffer to
