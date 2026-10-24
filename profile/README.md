@@ -1,64 +1,90 @@
+# Tetrodotoxin
+
 <p align="center">
   <a href="https://tetrodotoxin.dev">
-    <img src="https://raw.githubusercontent.com/tetrodotoxin-dev/Tetrodotoxin/main/extension/media/logo.png" alt="Tetrodotoxin Toolchain" width="100%">
+    <img src="media/logo.png" alt="Tetrodotoxin Toolchain" width="100%">
   </a>
 </p>
 
-Tetrodotoxin is a systems and tooling project about making independently built
-components useful to each other. A renderer, compiler service or language runtime
-should be able to offer its capabilities without requiring every consumer to
-adopt its storage, implementation language or private object model.
+**A shared semantic graph for languages, runtimes, and tools.**<br>Share capabilities safely across independently evolving systems.
 
-With TTX, a tool exposes its capabilities through driver-style interfaces that
-other languages and runtimes can use without adopting its implementation.
-Binding checks both the contract being requested and the layouts of its data
-and callable interface, so separately built components can establish how to
-work together before making a call.
+Tetrodotoxin composes systems through the policies and capabilities they choose
+to expose. Providers retain their private storage, runtime, implementation
+language and object model. Consumers navigate the relationships they understand
+and bind typed contracts after agreeing on their data and callable
+representations.
 
-## See it in Godot
+[Website](https://tetrodotoxin.dev) ·
+[Documentation](https://tetrodotoxin.dev/docs/) ·
+[Published releases](https://tetrodotoxin.dev/download/)
 
-Check out the [live Godot lab running in WebAssembly](https://tetrodotoxin.dev/lab/)
-or [build it locally](https://github.com/tetrodotoxin-dev/Godot#run-locally).
-The lab brings GDScript, native C++ and CUDA image providers into the same scene.
-They offer the same operations
-through TTX contracts while keeping their algorithms and storage separate.
-Changing an overlay updates the composition without recomputing an unrelated
-filter. Independent C and C++ modules also expose classes through a reusable
-Godot extension.
+## Systems using TTX
 
-You can try the CPU and GDScript providers directly in the browser. CUDA requires
-the [native setup](https://github.com/tetrodotoxin-dev/Godot) with a compatible GPU and toolkit.
+### Godot
 
-## Build and wrap toolchains with TTX
+The Godot integration composes GDScript, C++ and CUDA image providers through
+the same TTX contracts. Each provider keeps its algorithms and storage while
+Godot discovers the operations it can use. Native builds add CUDA; the browser
+build runs the C++ provider through WebAssembly alongside GDScript.
 
-TTX separates APIs needed to connect systems into three layers:
+[Open the image lab](https://tetrodotoxin.dev/#godot-lab) ·
+[Browse the Godot integration](https://github.com/tetrodotoxin-dev/Godot) ·
+[Read the design](https://tetrodotoxin.dev/docs/design/chapter-10/)
 
-* **Data** describes concrete data and callable forms, compiles their canonical
-  representations, and provides protocols for accessing values.
-* **Semantic** identifies contracts by UUID and negotiates their interfaces and
-  data access. Recognizing a contract and agreeing on a usable interface are
-  separate questions.
-* **Concept** exposes Abstracts that consumers can navigate and query for
-  policies. An implementation can answer the questions a consumer understands
-  without exposing its private classes.
+### Language tooling
 
-## Project Split
+Tetrodotoxin's Source dialect preserves lexical identity, source locations and
+diagnostics for independently supplied languages. Puffer drives a VS Code
+language extension with formatting, semantic highlighting and definition
+lookup through those shared source capabilities.
 
-| Project | Responsibility |
-| --- | --- |
-| [Perimortem](https://github.com/tetrodotoxin-dev/Perimortem) | Memory, containers, serialization, image storage and system services. |
-| [Toolchain](https://github.com/tetrodotoxin-dev/Toolchain) | Shared Bazel rules, compiler and SDK acquisition, validation and release packaging. |
-| TTX | The Data, Semantic and Concept foundation, independent of the source toolchain. |
-| [Tetrodotoxin](https://github.com/tetrodotoxin-dev/Tetrodotoxin) | Source dialects, semantic models and the compiler and toolchain work built on TTX. |
-| Photophore | Vulkan rendering, windowing and platform input. |
-| [CUDA](https://github.com/tetrodotoxin-dev/CUDA) | CUDA compilation and execution services exposed through TTX contracts. |
-| [Godot](https://github.com/tetrodotoxin-dev/Godot) | The reusable Godot bridge and the demonstration that exercises these interfaces. |
+[Browse Tetrodotoxin](https://github.com/tetrodotoxin-dev/Tetrodotoxin) ·
+[Read about Puffer](https://tetrodotoxin.dev/puffer/)
 
-## Join the work
+### C and C++ projects
 
-Concrete integration problems are welcome along with any contributions. Share an idea or report a problem through
-[GitHub Issues](https://github.com/tetrodotoxin-dev/Tetrodotoxin/issues), or contact
-[github@tetrodotoxin.dev](mailto:github@tetrodotoxin.dev).
+Toolchain pins the compiler and target SDKs, generates the editor environment,
+runs shared validation and packages dependency-complete SDKs. Perimortem, TTX,
+CUDA and Photophore publish independently consumable native libraries through
+that project model.
 
-Tetrodotoxin Projects are available under the
+[Use Toolchain](https://tetrodotoxin.dev/build/) ·
+[Set up a project](https://tetrodotoxin.dev/docs/getting-started/development/)
+
+## The shared boundary
+
+TTX separates the common boundary into three layers:
+
+- **Data** describes canonical data and callable forms, then provides protocols
+  for accessing and transferring represented values.
+- **Semantic** identifies contracts by UUID and negotiates the representation
+  required to use each interface.
+- **Graph** connects Abstract observations through routes, policies and
+  capabilities supplied by independently implemented providers.
+
+A provider establishes the interface it supplies before the consumer calls its
+operations. Each further route or binding remains a separate request, so
+systems can share useful capabilities without sharing their private runtime
+models.
+
+## Projects
+
+| Project | Responsibility | Available |
+| --- | --- | --- |
+| [TTX](https://github.com/tetrodotoxin-dev/TTX) | Canonical data, contract negotiation and the shared semantic graph. | [0.4.0](https://github.com/tetrodotoxin-dev/TTX/releases/tag/v0.4.0) |
+| [Perimortem](https://github.com/tetrodotoxin-dev/Perimortem) | Runtime primitives, memory, diagnostics, serialization and platform capabilities. | [0.4.0](https://github.com/tetrodotoxin-dev/Perimortem/releases/tag/v0.4.0) |
+| [Toolchain](https://github.com/tetrodotoxin-dev/Toolchain) | Pinned compilers, Bazel rules, validation and SDK packaging. | [0.4.1](https://github.com/tetrodotoxin-dev/Toolchain/releases/tag/v0.4.1) |
+| [Tetrodotoxin](https://github.com/tetrodotoxin-dev/Tetrodotoxin) | Source, Puffer, dialects and language tooling built on TTX. | [Source](https://github.com/tetrodotoxin-dev/Tetrodotoxin) |
+| [Photophore](https://github.com/tetrodotoxin-dev/Photophore) | Vulkan rendering, native windowing, input and image resources. | [0.1.0](https://github.com/tetrodotoxin-dev/Photophore/releases/tag/v0.1.0) |
+| [CUDA](https://github.com/tetrodotoxin-dev/CUDA) | CUDA compilation, execution and device storage supplied through TTX contracts. | [0.2.0](https://github.com/tetrodotoxin-dev/CUDA/releases/tag/v0.2.0) |
+| [Godot](https://github.com/tetrodotoxin-dev/Godot) | The Godot bridge and applications that exercise independently supplied capabilities. | [Source](https://github.com/tetrodotoxin-dev/Godot) |
+
+## Build and contribute
+
+Each repository owns its releases, dependencies and validation. The
+[development guide](https://tetrodotoxin.dev/docs/development/) explains those
+boundaries and the shared evidence standard. Concrete integration problems,
+bug reports and contributions are welcome through the responsible repository.
+
+Tetrodotoxin projects are available under the
 [MIT License](https://github.com/tetrodotoxin-dev/Tetrodotoxin/blob/main/LICENSE).

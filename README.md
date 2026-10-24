@@ -4,8 +4,12 @@ This repository owns the public profile for
 [`tetrodotoxin-dev`](https://github.com/tetrodotoxin-dev). GitHub renders
 [`profile/README.md`](profile/README.md) on the organization page.
 
-The [website](https://tetrodotoxin.dev) introduces the project and its ongoing
-research. Check out the [live Godot lab running in WebAssembly](https://tetrodotoxin.dev/lab/)
-or [build it locally](https://github.com/tetrodotoxin-dev/Godot#run-locally).
-The organization profile links to the implementation repositories and explains
-how their responsibilities fit together.
+The [website](https://tetrodotoxin.dev) introduces the project and its systems.
+The [documentation](https://tetrodotoxin.dev/docs/) explains the shared
+contracts, while the [Godot image lab](https://tetrodotoxin.dev/#godot-lab)
+demonstrates independently supplied capabilities in one application.
+
+The organization profile states the common project boundary and routes readers
+to the repository that owns each capability. Detailed API contracts remain with
+their public declarations, and build instructions remain with the repository
+that validates them.
