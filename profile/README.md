@@ -31,12 +31,23 @@ build runs the C++ provider through WebAssembly alongside GDScript.
 [Browse the Godot integration](https://github.com/tetrodotoxin-dev/Godot) ·
 [Read the design](https://tetrodotoxin.dev/docs/design/chapter-10/)
 
-### Language tooling
+### Extensible language infrastructure
 
-Tetrodotoxin's Source dialect preserves lexical identity, source locations and
-diagnostics for independently supplied languages. Puffer drives a VS Code
-language extension with formatting, semantic highlighting and definition
-lookup through those shared source capabilities.
+Tetrodotoxin provides an extensible Dialect system for building domain-specific
+languages on shared infrastructure. MLIR dialects preserve domain semantics
+through a compiler pipeline; Tetrodotoxin carries the same leverage across
+editor, build and runtime boundaries without requiring independently built
+Dialects to share one implementation model.
+
+Source is the foundation supplied with Tetrodotoxin. It turns authored bytes
+into a retained lexical stream with stable token identities, source locations,
+diagnostics and canonical formatting. Other Dialects interpret that stream into
+their own models instead of rebuilding the source layer.
+
+Puffer is the command-line and language-server host Tetrodotoxin uses for its
+own packages. The VS Code extension runs the same workspace through Puffer to
+provide hover, access completion, parameter hints, cross-package definition
+lookup, diagnostics, formatting, semantic highlighting and native debugging.
 
 [Browse Tetrodotoxin](https://github.com/tetrodotoxin-dev/Tetrodotoxin) ·
 [Read about Puffer](https://tetrodotoxin.dev/puffer/)
@@ -74,7 +85,7 @@ models.
 | [TTX](https://github.com/tetrodotoxin-dev/TTX) | Canonical data, contract negotiation and the shared semantic graph. | [0.4.0](https://github.com/tetrodotoxin-dev/TTX/releases/tag/v0.4.0) |
 | [Perimortem](https://github.com/tetrodotoxin-dev/Perimortem) | Runtime primitives, memory, diagnostics, serialization and platform capabilities. | [0.4.0](https://github.com/tetrodotoxin-dev/Perimortem/releases/tag/v0.4.0) |
 | [Toolchain](https://github.com/tetrodotoxin-dev/Toolchain) | Pinned compilers, Bazel rules, validation and SDK packaging. | [0.4.1](https://github.com/tetrodotoxin-dev/Toolchain/releases/tag/v0.4.1) |
-| [Tetrodotoxin](https://github.com/tetrodotoxin-dev/Tetrodotoxin) | Source, Puffer, dialects and language tooling built on TTX. | [Source](https://github.com/tetrodotoxin-dev/Tetrodotoxin) |
+| [Tetrodotoxin](https://github.com/tetrodotoxin-dev/Tetrodotoxin) | Extensible Dialects, Source, Puffer and language tooling built on TTX. | [Source](https://github.com/tetrodotoxin-dev/Tetrodotoxin) |
 | [Photophore](https://github.com/tetrodotoxin-dev/Photophore) | Vulkan rendering, native windowing, input and image resources. | [0.1.0](https://github.com/tetrodotoxin-dev/Photophore/releases/tag/v0.1.0) |
 | [CUDA](https://github.com/tetrodotoxin-dev/CUDA) | CUDA compilation, execution and device storage supplied through TTX contracts. | [0.2.0](https://github.com/tetrodotoxin-dev/CUDA/releases/tag/v0.2.0) |
 | [Godot](https://github.com/tetrodotoxin-dev/Godot) | The Godot bridge and applications that exercise independently supplied capabilities. | [Source](https://github.com/tetrodotoxin-dev/Godot) |
