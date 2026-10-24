@@ -18,9 +18,22 @@ representations.
 [Documentation](https://tetrodotoxin.dev/docs/) ·
 [Published releases](https://tetrodotoxin.dev/download/)
 
-## Systems using TTX
+## Semantic graph in practice
 
-### Godot
+### Build
+
+Define C and C++ projects once, then reuse the same compiler, validation,
+editor and SDK workflow. Toolchain pins the compiler and target SDKs, generates
+the editor environment, runs shared validation and packages dependency-complete
+SDKs for independently released native libraries.
+
+[Use Toolchain](https://tetrodotoxin.dev/build/) ·
+[Set up a project](https://tetrodotoxin.dev/docs/getting-started/development/)
+
+### Infrastructure
+
+Compose independently built systems through negotiated policies and
+capabilities.
 
 The Godot integration composes GDScript, C++ and CUDA image providers through
 the same TTX contracts. Each provider keeps its algorithms and storage while
@@ -31,7 +44,10 @@ build runs the C++ provider through WebAssembly alongside GDScript.
 [Browse the Godot integration](https://github.com/tetrodotoxin-dev/Godot) ·
 [Read the design](https://tetrodotoxin.dev/docs/design/chapter-10/)
 
-### Extensible language infrastructure
+### DSLs
+
+Publish a language's Type relationships and capabilities once, then reuse them
+across editors, compilers, runtimes and other languages.
 
 Tetrodotoxin provides an extensible Dialect system for building domain-specific
 languages on shared infrastructure. MLIR dialects preserve domain semantics
@@ -46,23 +62,15 @@ diagnostics and canonical formatting. Use it beneath a generated parser such as
 publish a graph-hosted AST that other Dialects and tools navigate without
 learning the parser's private object model.
 
-Puffer is the command-line and language-server host Tetrodotoxin uses for its
-own packages. The VS Code extension runs the same workspace through Puffer to
-provide hover, access completion, parameter hints, cross-package definition
-lookup, diagnostics, formatting, semantic highlighting and native debugging.
+Puffer is Tetrodotoxin's native front end. It passes each request into Build,
+which composes independently packaged Dialects and compiler Terminals into one
+workspace. JSON-RPC support belongs to a packaged Dialect around the same front
+end. Tetrodotoxin has used that shared model for native builds and a VS Code
+extension with hover, completion, cross-package navigation, diagnostics,
+formatting, semantic highlighting and native debugging.
 
 [Browse Tetrodotoxin](https://github.com/tetrodotoxin-dev/Tetrodotoxin) ·
-[Read about Puffer](https://tetrodotoxin.dev/puffer/)
-
-### C and C++ projects
-
-Toolchain pins the compiler and target SDKs, generates the editor environment,
-runs shared validation and packages dependency-complete SDKs. Perimortem, TTX,
-CUDA and Photophore publish independently consumable native libraries through
-that project model.
-
-[Use Toolchain](https://tetrodotoxin.dev/build/) ·
-[Set up a project](https://tetrodotoxin.dev/docs/getting-started/development/)
+[Explore DSLs](https://tetrodotoxin.dev/dsl/)
 
 ## The shared boundary
 
